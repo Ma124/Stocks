@@ -1,0 +1,23 @@
+language: python
+python:
+- '3.6'
+install:
+- npm install --global coffeescript
+- gem install haml
+- gem install sass
+- pip install configparser
+- mkdir out
+- chmod u=rwx build.sh
+script:
+- "./build.sh -a"
+after_success:
+- mv res/* out
+- cd out
+- git config user.name "Ma_124's Travis CI"
+- git init
+- git add .
+- git commit -a -m "#$TRAVIS_BUILD_NUMBER Commit Message '$TRAVIS_COMMIT_MESSAGE' (OS=$TRAVIS_OS_NAME)"
+- git push -f -q https://Ma124:$GITHUB_API_KEY@github.com/Ma124/Stocks-out master
+env:
+  global:
+    secure: gWHUkKP+QY+ohN5fPvlzcbKBlI79PpQq0I6NTM+95Sa6KgmDdvRr7OAjy6tV52TdGEdOxPw7Ykj/fcZ8FiF54H4LlYr2chqMC99R/7g0J1KrKOnwf1Pt81U6W1AlxgMR9hMtf9TRnXFHtO9Zd38sfF6ovhyQlgzGlj/jYgORwPJKLflmQIRDJRErVfjLkF8Kn6OZP/AA4jszLAUHc+FF8x7a3jJciJHLuUoLGb+vE7+9o4rB6pUP6KWxManywxAVOhEzIcTDqIuOL4LOJCgQNJxo/RvUtPAnO+cmJA8ezltINp/ncqRTQ3ySvwzkhlcf7gJynGun1ldtcyf3BN4k8blUjEPJCqGUnTZSEaRRBhruBd9z7uhupv5NZsb2bJiDdjwZ/XA0vja4uGT3SPEcpqWHYiFQufBPotCWeZ8r2KJn/eXAlWliUVAs0x8nnTo6kQzckOSSpF9Z4p2yWV9X/JlXmfjbo4depRPzbMx90fUV9R9/MXi8ycEIU3i0KIisHBAc6WFKCJunNF9E9erP8EvFiEbaNLRpl1k+SG6jQQuPwcVjRN704kBCRtC1Sq6gJ1lWaFY7qmd08UpvLxnw2AaacePO3/MTjT+FMGRfadbuG8FOfgBoJp96XdKQa0BIBLU9ELCRRmm6IrikPA8t/5DbPSY8//iRpmB6SjqQOEs=
